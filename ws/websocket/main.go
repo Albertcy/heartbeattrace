@@ -43,11 +43,11 @@ func Echo(ws *websocket.Conn) {
 		}
 
 		// 写入节流控制
-		/*
-			timeStamp, ok := throtting[reply]
-			if ok && (time.Now().Unix()-timeStamp < TIME_INTERVAL) {
-				continue
-			}*/
+		
+		timeStamp, ok := throtting[reply]
+		if ok && (time.Now().Unix()-timeStamp < TIME_INTERVAL) {
+			continue
+		}
 		delete(throtting, curSessionId)
 		throtting[reply] = time.Now().Unix()
 		wirteHeartBeat(reply)
@@ -72,7 +72,6 @@ func Echo(ws *websocket.Conn) {
 
 // 检测session 是否有效
 func checkOnlineUsers(sessionId string) bool {
-	return true
 	mc := memcache.New("127.0.0.1:11211")
 	data, err := mc.Get("hb_onLineUsers")
 
@@ -101,7 +100,7 @@ func checkOnlineUsers(sessionId string) bool {
 * @return null
  */
 func wirteHeartBeat(userSessionId string) {
-	resp, err := http.PostForm("http://localhost:8072/background/writeheartbeat.php", url.Values{"usersessionid": {userSessionId}})
+	resp, err := http.PostForm("http://localhost/background/writeheartbeat.php", url.Values{"usersessionid": {userSessionId}})
 	if err != nil {
 		logError(err, "")
 	}
