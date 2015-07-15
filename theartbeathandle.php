@@ -1,7 +1,7 @@
 <?php
 
 /**
- * ÓÃ»§µÇÂ¼ÐÄÌø¼ÇÂ¼¿Ø¼þ
+ * ç”¨æˆ·ç™»å½•å¿ƒè·³è®°å½•æŽ§ä»¶
  * 
  * @author albert
  *
@@ -10,7 +10,7 @@ class HeartBeatHandle
 {
 
     /**
-     * ÊÇ·ñÆôÓÃ ÐÄÌøÍ³¼Æ
+     * æ˜¯å¦å¯ç”¨ å¿ƒè·³ç»Ÿè®¡
      *
      * @return boolean
      */
@@ -20,7 +20,7 @@ class HeartBeatHandle
     }
 
     /**
-     * »ñÈ¡ÓÃ»§ä¯ÀÀÆ÷ÐÅÏ¢
+     * èŽ·å–ç”¨æˆ·æµè§ˆå™¨ä¿¡æ¯
      *
      * @return int
      */
@@ -30,7 +30,7 @@ class HeartBeatHandle
     }
 
     /**
-     * »ñÈ¡ä¯ÀÀÆ÷°²×°Æ½Ì¨ÐÅÏ¢
+     * èŽ·å–æµè§ˆå™¨å®‰è£…å¹³å°ä¿¡æ¯
      *
      * @return multitype:string
      */
@@ -40,7 +40,7 @@ class HeartBeatHandle
     }
 
     /**
-     * ÅÐ¶Ïie
+     * åˆ¤æ–­ie
      *
      * @return boolean
      */
@@ -50,7 +50,7 @@ class HeartBeatHandle
     }
 
     /**
-     * ÅÐ¶Ïwindows
+     * åˆ¤æ–­windows
      *
      * @return boolean
      */
@@ -60,7 +60,7 @@ class HeartBeatHandle
     }
 
     /**
-     * »ñÈ¡ÀëÏßÓÃ»§ÐÅÏ¢
+     * èŽ·å–ç¦»çº¿ç”¨æˆ·ä¿¡æ¯
      *
      * @return null
      */
@@ -96,7 +96,7 @@ class HeartBeatHandle
     }
 
     /**
-     * ´Óu8µÇ³ö
+     * ä»Žu8ç™»å‡º
      *
      * @param array $userInfos            
      * @return null
@@ -119,7 +119,7 @@ class HeartBeatHandle
     }
 
     /**
-     * É¾³ýtc_active_user ÖÐ¶ÔÓ¦Êý¾Ý
+     * åˆ é™¤tc_active_user ä¸­å¯¹åº”æ•°æ®
      *
      * @param $sessionIds array            
      * @return null
@@ -141,7 +141,7 @@ class HeartBeatHandle
     }
 
     /**
-     * ·µ»Ø Ö´ÐÐ¼Æ»®½Å±¾Ê±¼ä¼ä¸ô
+     * è¿”å›ž æ‰§è¡Œè®¡åˆ’è„šæœ¬æ—¶é—´é—´éš”
      *
      * @return number
      */
@@ -151,7 +151,7 @@ class HeartBeatHandle
     }
     
     /**
-     * ¼ì²â·þÎñÊÇ·ñÔËÐÐ
+     * æ£€æµ‹æœåŠ¡æ˜¯å¦è¿è¡Œ
      * @return boolean
      */
     public function checkWSService()
@@ -160,7 +160,7 @@ class HeartBeatHandle
     }
     
     /**
-     * ÔËÐÐ·þÎñ
+     * è¿è¡ŒæœåŠ¡
      * 
      * @return null
      */
@@ -170,7 +170,7 @@ class HeartBeatHandle
     }
 
     /**
-     * »ñÈ¡ÓÃ»§µÇÂ¼»·¾³ÐÅÏ¢ ÓÃ»§ä¯ÀÀÆ÷ ²Ù×÷ÏµÍ³µÈ
+     * èŽ·å–ç”¨æˆ·ç™»å½•çŽ¯å¢ƒä¿¡æ¯ ç”¨æˆ·æµè§ˆå™¨ æ“ä½œç³»ç»Ÿç­‰
      *
      * @return int
      */
@@ -181,7 +181,7 @@ class HeartBeatHandle
     }
 
     /**
-     * Ð´ÈëÓÃ»§ÐÄÌøÐÅÏ¢
+     * å†™å…¥ç”¨æˆ·å¿ƒè·³ä¿¡æ¯
      *
      * @param $sessionId sessionid            
      * @return null
@@ -197,7 +197,7 @@ class HeartBeatHandle
     }
 
     /**
-     * ¼ÇÂ¼ ÔÚÏßÓÃ»§ ¼ì²âµ±Ç°ÓÐÐ§µÄÓÃ»§
+     * è®°å½• åœ¨çº¿ç”¨æˆ· æ£€æµ‹å½“å‰æœ‰æ•ˆçš„ç”¨æˆ·
      *
      * @return null
      */
@@ -209,7 +209,7 @@ class HeartBeatHandle
     }
 
     /**
-     * »ñÈ¡ÔÚÏßÓÃ»§ session id
+     * èŽ·å–åœ¨çº¿ç”¨æˆ· session id
      *
      * @return array
      */
@@ -232,7 +232,7 @@ class HeartBeatHandle
     }
 
     /**
-     * »ñÈ¡ÓÃ»§²Ù×÷ÏµÍ³ÐÅÏ¢
+     * èŽ·å–ç”¨æˆ·æ“ä½œç³»ç»Ÿä¿¡æ¯
      *
      * @return int
      */
@@ -240,14 +240,14 @@ class HeartBeatHandle
     {}
 
     /**
-     * ÓÃ»§ä¯ÀÀÆ÷ÐÅÏ¢
+     * ç”¨æˆ·æµè§ˆå™¨ä¿¡æ¯
      *
      * @var array
      */
     private static $browserInfo = array();
 
     /**
-     * ä¯ÀÀÆ÷ÀàÐÍÓ³Éä
+     * æµè§ˆå™¨ç±»åž‹æ˜ å°„
      *
      * @var array
      */
