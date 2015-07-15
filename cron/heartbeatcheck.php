@@ -2,14 +2,14 @@
 
 include_once ("theartbeathandle.lib");
 $HBhandle = new HeartBeatHandle();
-    // 쇱꿎쌈肝懃契륩蛟角뤠頓契
+    // 检测后台服务是否启用
     if (! $HBhandle->checkWSService()) {
         $HBhandle->runWSService();
     } else {
         $userInfos = $HBhandle->getOfflineUsers();
-        // 헌뇝되쩌
-        $HBhandle->doLogoutU8($userInfos);
-        // 헌뇝active_user깊
+        // 登出系统
+        $HBhandle->doLogout($userInfos);
+        // 清楚当前活动用户
         $HBhandle->deleteActiveUser(array_keys($userInfos));
         
         // Set next scan time
