@@ -1,20 +1,16 @@
 <?php
 /**
  *
- * 用户心跳记录
+ * 鐢ㄦ埛蹇冭烦璁板綍
  */
-$DontCheckLogin = true;
-$DontValidateSite = true;
-
 $sessionId = addslashes($_REQUEST['usersessionid']);
 session_id($sessionId);
 
-include_once ("tglobal.lib");
 include_once ("theartbeathandle.lib");
 
-// 处理心跳
+// 澶勭悊蹇冭烦
 $hbHandle = new HeartBeatHandle();
 $hbHandle->updateHeartBeatInfo($sessionId);
 
-// 记录在线人员
+// 璁板綍鍦ㄧ嚎浜哄憳
 $hbHandle->tagOnlineUser();
