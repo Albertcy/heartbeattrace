@@ -96,26 +96,14 @@ class HeartBeatHandle
     }
 
     /**
-     * 从u8登出
+     * 从系统登出
      *
      * @param array $userInfos            
      * @return null
      */
-    public function doLogoutU8($userInfos = array())
+    public function doLogou($userInfos = array())
     {
-        $systems = array(
-            '1',
-            '2',
-            '3'
-        );
-        include_once 'tlogin.lib';
-        $login = new TUserLogin();
-        foreach ($userInfos as $sessionId => $info) {
-            if (in_array($info['login_sys'], $systems)) {
-                $login->checkLicense('', $info['login_sys'], true, $sessionId);
-                sleep(0.2);
-            }
-        }
+       // do  logout
     }
 
     /**
