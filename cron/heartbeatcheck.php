@@ -1,32 +1,15 @@
 <?php
-$DontCheckLogin = true;
-$DontValidateSite = true;
-$gblOrgID = 0;
 
-include_once ("tglobal.lib");
-include_once ("tlogin_u8_dbinfo.lib");
 include_once ("theartbeathandle.lib");
 $HBhandle = new HeartBeatHandle();
-
-$dbinfo = new LoginU8DbInfo();
-$cDatabases = $dbinfo->getU8DBInfo();
-
-foreach ($cDatabases as $cDatabase) {
-    $gblObj = TGBL_getObject();
-    $gblObj->clearDataCache();
-    $errno = $gblObj->LoginWithUser($cDatabase);
-    if (! $errno) {
-        continue;
-    }
-    
-    // ¼ì²â½ÓÊÜÐÄÌø·þÎñÊÇ·ñÔËÐÐ
+    // ì‡±ê¿ŽìŒˆè‚æ‡ƒå¥‘ë¥©è›Ÿè§’ë¤ é “ï¤‰
     if (! $HBhandle->checkWSService()) {
         $HBhandle->runWSService();
     } else {
         $userInfos = $HBhandle->getOfflineUsers();
-        // Çå³þµÇÂ¼
+        // í—Œë‡ë˜ì©Œ
         $HBhandle->doLogoutU8($userInfos);
-        // Çå³þactive_user±í
+        // í—Œë‡active_userê¹Š
         $HBhandle->deleteActiveUser(array_keys($userInfos));
         
         // Set next scan time
@@ -42,24 +25,4 @@ foreach ($cDatabases as $cDatabase) {
     
     $nexttime = time() + $HBhandle->getcheckHBCronInterval();
     $timestr = date('Y-m-d H:i:s', $nexttime);
-    $sql = 'UPDATE tc_background_task SET plan_start_time=' . $gblDB->TDB_ToDateByString($timestr) . ' WHERE bg_task_id=' . $ID;
-    $gblDB->execute($sql);
-    if (! isEmptyString($svr)) {
-        $fp = @fsockopen($svr, $gblObj->getBGPort(), $errno, $errstr, 1);
-        if ($fp) {
-            $str = TDatadictCache::PreSendInt(5);
-            $str .= TDatadictCache::PreSendStr('0');
-            $str .= TDatadictCache::PreSendStr($ID . '');
-            $str .= TDatadictCache::PreSendInt(1);
-            $str .= TDatadictCache::PreSendLong($nexttime);
-            $str .= TDatadictCache::PreSendStr('/background/timeoutlogin.php?ID=' . $ID);
-            
-            fwrite($fp, $str, strlen($str));
-            
-            fclose($fp);
-        } else {
-            $sql = "UPDATE tc_background_task SET bg_server_ip='' WHERE bg_task_id=" . $ID;
-            $gblDB->execute($sql);
-        }
-    }
 }
