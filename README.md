@@ -1,2 +1,2 @@
 # heartbeattrace
-detect web users were still on line.
+a small service detect whether web app users are still on line.
