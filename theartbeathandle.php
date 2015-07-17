@@ -154,7 +154,7 @@ class HeartBeatHandle
      */
     public function runWSService()
     {
-       pclose(popen('start /B cmd /C "D:/U8SOFT/turbocrm70/tsvr/websocket.exe >NUL 2>NUL"', 'r'));
+       pclose(popen('start /B cmd /C "websocket.exe >NUL 2>NUL"', 'r'));
     }
 
     /**
