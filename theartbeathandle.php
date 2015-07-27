@@ -26,7 +26,8 @@ class HeartBeatHandle
      */
     public function getBrowserType()
     {
-        return $this->browserTypeMaps[$this->getUserBrowserInfo('browser')];
+        $type = $this->getUserBrowserInfo('browser');
+        return false !== strpos($type, 'IE') ? $this->browserTypeMaps[$type . $this->getBrowserVer()] : $this->browserTypeMaps[$type];
     }
 
     /**
@@ -47,6 +48,16 @@ class HeartBeatHandle
     public function isIE()
     {
         return strpos($this->getUserBrowserInfo('browser'), 'IE') !== false;
+    }
+
+    /**
+     * 获取浏览器版本
+     *
+     * @return string
+     */
+    public function getBrowserVer()
+    {
+        return $this->getUserBrowserInfo('version');
     }
 
     /**
@@ -71,6 +82,7 @@ class HeartBeatHandle
         $sql = 'SELECT login_sys, session_id, his_id
             FROM tc_active_user 
             WHERE heartbeat_time <' . (time() - self::HEART_BEAT_INTERVAL) . '
+            AND heartbeat_time <> 0
             AND platform_type in (' . implode(',', array(
             self::PLATFORM_TYPE_WINXP,
             self::PLATFORM_TYPE_WIN7,
@@ -79,7 +91,8 @@ class HeartBeatHandle
             AND browser_type in (' . implode(',', array(
             self::BROWSER_TYPE_FF,
             self::BROWSER_TYPE_CHROME,
-            self::BROWSER_TYPE_OPERA
+            self::BROWSER_TYPE_OPERA,
+            self::BROWSER_TYPE_IE11
         )) . ')';
         
         $rs = $gblDB->query($sql);
@@ -118,10 +131,9 @@ class HeartBeatHandle
         if (empty($sessionIds)) {
             return false;
         }
-        
-        $sessionIds = array(
-            $sessionIds
-        );
+        if (! is_array($sessionIds)) {
+            $sessionIds = (array) $sessionIds;
+        }
         
         $sql = 'DELETE FROM  tc_active_user 
             WHERE session_id in (' . implode(',', $sessionIds) . ')';
@@ -243,12 +255,17 @@ class HeartBeatHandle
         'Chrome' => self::BROWSER_TYPE_CHROME,
         'Firefox' => self::BROWSER_TYPE_FF,
         'IE' => self::BROWSER_TYPE_IE,
+        'IE8.0' => self::BROWSER_TYPE_IE8,
+        'IE9.0' => self::BROWSER_TYPE_IE9,
+        'IE10.0' => self::BROWSER_TYPE_IE10,
+        'IE11.0' => self::BROWSER_TYPE_IE11,
         'Opera' => self::BROWSER_TYPE_OPERA
     );
 
     private $platformTypeMaps = array(
         'WinXP' => self::PLATFORM_TYPE_WINXP,
         'Win7' => self::PLATFORM_TYPE_WIN7,
+        'Win8' => self::PLATFORM_TYPE_WIN80,
         'Win8.1' => self::PLATFORM_TYPE_WIN8
     );
 
@@ -260,12 +277,24 @@ class HeartBeatHandle
     const PLATFORM_TYPE_WIN7 = 2;
     // win8 winserver 2012
     const PLATFORM_TYPE_WIN8 = 3;
+    // win8.0
+    const PLATFORM_TYPE_WIN80 = 4;
 
     const BROWSER_TYPE_IE = 1;
+
+    const BROWSER_TYPE_IE7 = 17;
+
+    const BROWSER_TYPE_IE8 = 18;
+
+    const BROWSER_TYPE_IE9 = 19;
+
+    const BROWSER_TYPE_IE10 = 110;
+
+    const BROWSER_TYPE_IE11 = 111;
 
     const BROWSER_TYPE_FF = 2;
 
     const BROWSER_TYPE_CHROME = 3;
-    
+
     const BROWSER_TYPE_OPERA = 4;
 } 
