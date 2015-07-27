@@ -107,7 +107,7 @@ func checkOnlineUsers(sessionId string) bool {
 * @return null
  */
 func wirteHeartBeat(userSessionId string) {
-	resp, err := http.PostForm("http://localhost:8072/background/writeheartbeat.php", url.Values{"usersessionid": {userSessionId}})
+	resp, err := http.PostForm("/background/writeheartbeat.php", url.Values{"usersessionid": {userSessionId}})
 	if err != nil {
 		logError(err, "")
 	}
