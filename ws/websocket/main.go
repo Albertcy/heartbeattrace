@@ -19,6 +19,12 @@ var throtting = make(map[string]int64)
 // 记录访问信息
 var bLogMsg = true
 
+// 检测离线用户
+var bCheckOfflineUser = false
+
+// 回显
+var bEcho = false
+
 /**
 * websocket 回调方法
  */
@@ -43,18 +49,19 @@ func Echo(ws *websocket.Conn) {
 		}
 
 		// 写入节流控制
-		
+
 		timeStamp, ok := throtting[reply]
 		if ok && (time.Now().Unix()-timeStamp < TIME_INTERVAL) {
 			continue
 		}
+
 		delete(throtting, curSessionId)
 		throtting[reply] = time.Now().Unix()
 		wirteHeartBeat(reply)
 
 		// session 超时用户停止发送心跳
 
-		if !checkOnlineUsers(reply) {
+		if bCheckOfflineUser && !checkOnlineUsers(reply) {
 			if bLogMsg {
 				msg = "Sending to client: " + "Received:  " + reply
 				logMsg(msg)
@@ -100,7 +107,7 @@ func checkOnlineUsers(sessionId string) bool {
 * @return null
  */
 func wirteHeartBeat(userSessionId string) {
-	resp, err := http.PostForm("http://localhost/background/writeheartbeat.php", url.Values{"usersessionid": {userSessionId}})
+	resp, err := http.PostForm("http://localhost:8072/background/writeheartbeat.php", url.Values{"usersessionid": {userSessionId}})
 	if err != nil {
 		logError(err, "")
 	}
@@ -115,12 +122,22 @@ func wirteHeartBeat(userSessionId string) {
 @return null
 */
 func logError(e error, msg string) {
-	logs.Logger.Errorf(" error occurred: %s %v", msg, e)
+	if bEcho {
+		fmt.Println(time.Now(), msg, e)
+	} else {
+		logs.Logger.Errorf(" error occurred: %s %v", msg, e)
+	}
+
 }
 
 // 打印信息
 func logMsg(msg string) {
-	logs.Logger.Info(msg)
+	if bEcho {
+		fmt.Println(time.Now(), msg)
+	} else {
+		logs.Logger.Info(msg)
+	}
+
 }
 
 func main() {
@@ -133,7 +150,7 @@ func main() {
 
 	http.Handle("/socket", websocket.Handler(Echo))
 
-	if err := http.ListenAndServe(":1234", nil); err != nil {
+	if err := http.ListenAndServe(":2324", nil); err != nil {
 		log.Fatal("ListenAndServe:", err)
 	}
 

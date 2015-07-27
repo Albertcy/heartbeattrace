@@ -23,7 +23,7 @@ func loadAppConfig() {
     <formats>
         <format id="common" format="%Date/%Time [%LEV] %Msg%n" />
         <format id="critical" format="%File %FullPath %Func %Msg%n" />
-		<format id="error" format="%File %FullPath %Func %Msg%n" />
+		<format id="error" format="%Date/%Time %File %FullPath %Func %Msg%n" />
     </formats>
 </seelog>`
 	logger, err := seelog.LoggerFromConfigAsBytes([]byte(appConfig))
